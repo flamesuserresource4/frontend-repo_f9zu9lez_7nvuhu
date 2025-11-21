@@ -1,70 +1,65 @@
+import { useState } from 'react'
+import Sidebar from './components/Sidebar'
+import Hero from './components/Hero'
+import { IncomeForm, ExpenseForm } from './components/Forms'
+import Dashboard from './components/Dashboard'
+
 function App() {
+  const [current, setCurrent] = useState('home')
+  const [mobileOpen, setMobileOpen] = useState(false)
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
-      {/* Subtle pattern overlay */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(59,130,246,0.05),transparent_50%)]"></div>
+    <div className="min-h-screen bg-slate-950 text-slate-100">
+      <div className="flex">
+        <Sidebar current={current} setCurrent={setCurrent} mobileOpen={mobileOpen} setMobileOpen={setMobileOpen} />
 
-      <div className="relative min-h-screen flex items-center justify-center p-8">
-        <div className="max-w-2xl w-full">
-          {/* Header with Flames icon */}
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center justify-center mb-6">
-              <img
-                src="/flame-icon.svg"
-                alt="Flames"
-                className="w-24 h-24 drop-shadow-[0_0_25px_rgba(59,130,246,0.5)]"
-              />
-            </div>
+        <main className="flex-1 min-h-screen">
+          <div className="max-w-7xl mx-auto p-4 md:p-6 lg:p-8">
+            {current === 'home' && (
+              <div className="space-y-6">
+                <Hero />
+                <section className="p-6 rounded-2xl bg-slate-900 border border-slate-800">
+                  <h2 className="text-xl font-semibold mb-2">Welcome</h2>
+                  <p className="text-slate-400 text-sm leading-relaxed">
+                    A modern, privacy-friendly dashboard to track your income and expenses. Use the Input section to add entries, and explore the Dashboard for insights with interactive charts. Designed in a clean dark theme with emerald accents.
+                  </p>
+                </section>
+              </div>
+            )}
 
-            <h1 className="text-5xl font-bold text-white mb-4 tracking-tight">
-              Flames Blue
-            </h1>
+            {current === 'income' && (
+              <div className="space-y-4">
+                <h2 className="text-2xl font-semibold">Income Input</h2>
+                <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800">
+                  <IncomeForm />
+                </div>
+              </div>
+            )}
 
-            <p className="text-xl text-blue-200 mb-6">
-              Build applications through conversation
-            </p>
+            {current === 'expense' && (
+              <div className="space-y-4">
+                <h2 className="text-2xl font-semibold">Expense Input</h2>
+                <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800">
+                  <ExpenseForm />
+                </div>
+              </div>
+            )}
+
+            {current === 'dashboard' && (
+              <div className="space-y-4">
+                <h2 className="text-2xl font-semibold">Dashboard</h2>
+                <Dashboard />
+              </div>
+            )}
+
+            {(current === 'goals' || current === 'reports' || current === 'profile') && (
+              <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800">
+                <h2 className="text-xl font-semibold mb-2">Coming Soon</h2>
+                <p className="text-slate-400 text-sm">This section will include additional features like goals, monthly reports, and profile settings.</p>
+              </div>
+            )}
           </div>
-
-          {/* Instructions */}
-          <div className="bg-slate-800/50 backdrop-blur-sm border border-blue-500/20 rounded-2xl p-8 shadow-xl mb-6">
-            <div className="flex items-start gap-4 mb-6">
-              <div className="flex-shrink-0 w-8 h-8 bg-blue-500 text-white rounded-lg flex items-center justify-center font-bold">
-                1
-              </div>
-              <div>
-                <h3 className="font-semibold text-white mb-1">Describe your idea</h3>
-                <p className="text-blue-200/80 text-sm">Use the chat panel on the left to tell the AI what you want to build</p>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-4 mb-6">
-              <div className="flex-shrink-0 w-8 h-8 bg-blue-500 text-white rounded-lg flex items-center justify-center font-bold">
-                2
-              </div>
-              <div>
-                <h3 className="font-semibold text-white mb-1">Watch it build</h3>
-                <p className="text-blue-200/80 text-sm">Your app will appear in this preview as the AI generates the code</p>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-4">
-              <div className="flex-shrink-0 w-8 h-8 bg-blue-500 text-white rounded-lg flex items-center justify-center font-bold">
-                3
-              </div>
-              <div>
-                <h3 className="font-semibold text-white mb-1">Refine and iterate</h3>
-                <p className="text-blue-200/80 text-sm">Continue the conversation to add features and make changes</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Footer */}
-          <div className="text-center">
-            <p className="text-sm text-blue-300/60">
-              No coding required • Just describe what you want
-            </p>
-          </div>
-        </div>
+        </main>
       </div>
     </div>
   )
